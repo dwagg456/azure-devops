@@ -1,53 +1,104 @@
 # Overview
 
-<TODO: complete this with an overview of your project>
+This is the Building a CI/CD Pipeline project for the DevOps Engineer for Microsoft Azure Nanodegree Program at Udacity.
+
+The project consists of a project plan spreadsheet and Trello board for planning and configuring continous integration and delivery for a sample webapp via Github Actions and Azure Pipelines. A video recording has been created to walk through the project and demo the deployed application.
+
 
 ## Project Plan
-<TODO: Project Plan
 
-* A link to a Trello board for the project
-* A link to a spreadsheet that includes the original and final project plan>
+* [Trello Board](https://trello.com/b/atV0LJRZ/building-a-ci-cd-pipeline)
+* [Project Plan Spreadsheet](https://github.com/dwagg456/azure-devops/blob/main/project-plan-spreadsheet.xls)
+
 
 ## Instructions
 
-<TODO:  
-* Architectural Diagram (Shows how key parts of the system work)>
+Architectural Diagram:
+![](images/building-a-ci-cd-pipeline.png)
 
-<TODO:  Instructions for running the Python project.  How could a user with no context run this project without asking you for any help.  Include screenshots with explicit steps to create that work. Be sure to at least include the following screenshots:
 
-* Project running on Azure App Service
+### Clone Project into Azure Cloud Shell
 
-* Project cloned into Azure Cloud Shell
+* Clone project into Azure Cloud Shell
+```
+git clone git@github.com:dwagg456/azure-devops.git
+```
+![](images/screenshot_clone-repo.png)
 
-* Passing tests that are displayed after running the `make all` command from the `Makefile`
+* Create a virtual environment
+```
+make setup
+```
+* Activate the virtual environment
+```
+source ~/.udacity-devops/bin/activate
+```
+* Run the `make all` command from the `Makefile` to install, lint, and test project
+```
+make all
+```
+![](images/screenshot_make-all.png)
 
-* Output of a test run
+* Start the application.
+```
+python app.py
+```
+
+* While app is running, open a new Cloud Shell environment and test that the application is working.
+
+![](images/screenshot_local-predict.png)
+
+* As code changes are pushed to Github, verify that the tests pass in the Github Actions YAML file. 
 
 [![Python application test with Github Actions](https://github.com/dwagg456/azure-devops/actions/workflows/pythonapp.yml/badge.svg)](https://github.com/dwagg456/azure-devops/actions/workflows/pythonapp.yml)
 
-* Successful deploy of the project in Azure Pipelines.  [Note the official documentation should be referred to and double checked as you setup CI/CD](https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/python-webapp?view=azure-devops).
 
-* Running Azure App Service from Azure Pipelines automatic deployment
-
-* Successful prediction from deployed flask app in Azure Cloud Shell.  [Use this file as a template for the deployed prediction](https://github.com/udacity/nd082-Azure-Cloud-DevOps-Starter-Code/blob/master/C2-AgileDevelopmentwithAzure/project/starter_files/flask-sklearn/make_predict_azure_app.sh).
-The output should look similar to this:
-
-```bash
-udacity@Azure:~$ ./make_predict_azure_app.sh
-Port: 443
-{"prediction":[20.35373177134412]}
+### Run Project on Azure App Service
+* Create app service in Azure named azure-devops-service.
+```
+az webapp up -n azure-devops-service
 ```
 
-* Output of streamed log files from deployed application
+* Run test prediction to verify app service is running.
+```
+./make_predict_azure_app.sh
+```
 
-> 
+* View results of prediction.
+
+![](images/screenshot_sklearn-predict.png)
+
+* View output of streamed log files
+``` 
+az webapp log tail --name azure-devops-service
+```
+
+* Configure new pipeline at https://dev.azure.com to deploy the Python project to Azure as Linux Web App. 
+
+![](images/screenshot_pipelines.png)
+
+
+### Load Test with Locust
+* Start locust application
+```
+locust -f locustfile.py
+```
+
+* Open browser window to http://localhost:8089 to input specifications and begin load test.
+
+![](images/screenshot_locust-setup.png)
+
+* View loadtest results in GUI.
+
+![](images/screenshot_locust-results.png)
+
 
 ## Enhancements
 
-<TODO: A short description of how to improve the project in the future>
+Improvements to this project could be made by implementing alternate frameworks or languages. Additionally, much more robust testing could be implemented via Github Actions.
 
 ## Demo 
 
-<TODO: Add link Screencast on YouTube>
+* [Demo Video](https://todo.com)
 
 

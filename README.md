@@ -56,8 +56,10 @@ python app.py
 ### Run Project on Azure App Service
 * Create app service in Azure named azure-devops-service.
 ```
-az webapp up -n azure-devops-service
+az webapp up --sku F1 -n azure-devops-service
 ```
+
+![](images/screenshot_app-service.png)
 
 * Run test prediction to verify app service is running.
 ```
@@ -73,7 +75,7 @@ az webapp up -n azure-devops-service
 az webapp log tail --name azure-devops-service
 ```
 
-* Configure new pipeline at https://dev.azure.com to deploy the Python project to Azure as Linux Web App. 
+* Configure pipeline at https://dev.azure.com to deploy the Python project to Azure as Linux Web App. 
 
 ![](images/screenshot_pipelines.png)
 

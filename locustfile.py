@@ -10,7 +10,11 @@ input = {
 }
 
 class MyTask(TaskSet):
-    @task
+    @task(1)
+    def home_task(self):
+        self.client.get("/")
+
+    @task(2)
     def predict_task(self):
         self.client.post("/predict", json=input)
 
